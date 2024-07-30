@@ -1,0 +1,123 @@
+/*
+  CSS reset. Credits to Josh W Comeau
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  /* not a part of CSS reset */
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+}
+/*
+  5. Improve media defaults
+*/
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  6. Remove built-in form typography styles
+*/
+input, button, textarea, select {
+  font: inherit;
+}
+/*
+  7. Avoid text overflows
+*/
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+/*
+  8. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+header {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    background-color: blueviolet;
+    align-items: center;
+    justify-content: flex-start;
+    height: 5vh;
+    padding: 1vh;
+}
+
+#add-task-btn {
+    grid-column: 1 2;
+    height: 3vh;
+    width: 3vh;
+    display: flex;
+    justify-self: flex-end;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    height: 100%;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    grid-column: 0 1;
+    padding: 1vh;
+    gap: 2vh 2vh;
+    background-color: aquamarine;
+}
+
+#days-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh 2vh;
+}
+
+#today-container {
+    display: flex;
+    gap: 1vh 1vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh 2vh;
+}
+
+.sidebar-btn {
+    display: flex;
+   
+}
+
+#tasks-container {
+    padding: 1vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+#tasks-header {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 2px solid grey;
+}

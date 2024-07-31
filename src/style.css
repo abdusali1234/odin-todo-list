@@ -61,7 +61,7 @@ header {
 }
 
 #add-task-btn {
-    grid-column: 1 2;
+    grid-column: 2;
     height: 3vh;
     width: 3vh;
     display: flex;
@@ -79,33 +79,19 @@ main {
 #sidebar {
     display: flex;
     flex-direction: column;
-    grid-column: 0 1;
+    grid-column: 1;
     padding: 1vh;
     gap: 2vh 2vh;
     background-color: aquamarine;
 }
 
-#days-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2vh 2vh;
-}
-
-#today-container {
-    display: flex;
-    gap: 1vh 1vh;
-    justify-content: center;
-    align-items: center;
-}
-
-#projects-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2vh 2vh;
-}
 
 .sidebar-btn {
     display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0 2vw;
+    text-align: right;
    
 }
 
@@ -116,7 +102,7 @@ main {
     border: 1px solid black;
 }
 
-#tasks-header {
+.subheading {
     display: flex;
     justify-content: flex-start;
     border-bottom: 2px solid grey;

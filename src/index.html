@@ -12,12 +12,24 @@
     </header>
     <main>
         <section id="sidebar">
-            <button class="sidebar-btn" id="week"><i class="fa-solid fa-house-chimney"></i>Home</button>
-            <button class="sidebar-btn" id="today"><i class="fas fa-calendar-day"></i>Today</button>
-            <button class="sidebar-btn" id="week"><i class="fas fa-calendar-week"></i>Upcoming</button>
+            <button class="sidebar-btn" id="week">
+                <div class="icons"><i class="fa-solid fa-house-chimney"></i></div>
+                <div class="sidebar-btn-text">Home</div>
+            </button>
+            <button class="sidebar-btn" id="today">
+                <div class="icons"><i class="fas fa-calendar-day"></i></div>
+                <div class="sidebar-btn-text">Today</div>
+            </button>
+            <button class="sidebar-btn" id="week">
+                <div class="icons"><i class="fas fa-calendar-week"></i></div>
+                <div class="sidebar-btn-text">Upcoming</div>
+            </button>
             <div class="subheading">Projects</div>
             <div id="projects-list"></div>
-            <button class="sidebar-btn" id="create-new-project"><i class="fas fa-plus"></i>Create new project</button>
+            <button class="sidebar-btn" id="create-new-project">
+                <div class="icons"><i class="fas fa-plus"></i></div>
+                <div class="sidebar-btn-text">New Project</div>
+            </button>
         </section>
         <section id="tasks-container">
             <div class="subheading">Today</div>
@@ -26,14 +38,16 @@
 
         <dialog id="new-project-dialog">
             <h1>Create New Project</h1>
-            <form id="project-entry">
-                <label for="project">Project Name:</label>
-                <input type="text" name="title" id="title" required>
-                <div class="dialog-btn-container">
-                    <button type="submit" id="submit-project-entry">Create</button>
-                    <button type="button" id="cancel-project-entry">Cancel</button>
-                </div>
-            </form>
+            <div class="dialog-container">
+                <form id="project-entry">
+                    <label for="project">Project Name:</label>
+                    <input type="text" name="title" id="title" required>
+                    <div class="dialog-btn-container">
+                        <button type="submit" id="submit-project-entry">Create</button>
+                        <button type="button" id="cancel-project-entry">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </dialog>
     </main>
     

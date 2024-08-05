@@ -9,11 +9,13 @@ class UserInterface {
         project.classList.add("sidebar-btn");
         project.setAttribute("id", `${item.title}`);
         project.innerHTML = `
-                <i class="fa-solid fa-hashtag"></i>
-                <button class="delete-project">
-                    <i class="fa-solid fa-trash-can"></i>
-                </button>
-                ${item.title}
+                <div class="icons">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <button class="delete-project">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+                <div class="sidebar-btn-text">${item.title}</div>
                 `;
         projectsList.appendChild(project);
     }

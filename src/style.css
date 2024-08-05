@@ -72,7 +72,7 @@ header {
 
 main {
     display: grid;
-    grid-template-columns: 1fr 7fr;
+    grid-template-columns: 1fr 9fr;
     height: 100%;
 }
 
@@ -87,12 +87,56 @@ main {
 
 
 .sidebar-btn {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 0 2vw;
-    text-align: right;
-   
+}
+
+.icons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0 0.5vw;
+}
+
+.sidebar-btn-text {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#projects-list {
+  display: flex;
+  flex-direction: column;
+}
+
+dialog {
+  margin: auto;
+  border-radius: 2vh;
+  padding: 2vh;
+  
+}
+
+.dialog-container {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  gap: 0 0.5vh;
+}
+
+form {
+  width: 80%;
+  margin-bottom: 2vh;
+  display: grid;  
+  grid-template-columns: 1fr 2fr;
+  row-gap:0.5vw;
+}
+
+.dialog-btn-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1vh 0.5vw;
 }
 
 #tasks-container {

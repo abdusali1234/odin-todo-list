@@ -16,13 +16,25 @@
             <button class="sidebar-btn" id="today"><i class="fas fa-calendar-day"></i>Today</button>
             <button class="sidebar-btn" id="week"><i class="fas fa-calendar-week"></i>Upcoming</button>
             <div class="subheading">Projects</div>
-            <button class="sidebar-btn" id="create-new-project"><i class="fas fa-plus"></i>Create new project</button>
             <div id="projects-list"></div>
+            <button class="sidebar-btn" id="create-new-project"><i class="fas fa-plus"></i>Create new project</button>
         </section>
         <section id="tasks-container">
             <div class="subheading">Today</div>
             <div id="cards-container"></div>
         </section>
+
+        <dialog id="new-project-dialog">
+            <h1>Create New Project</h1>
+            <form id="project-entry">
+                <label for="project">Project Name:</label>
+                <input type="text" name="title" id="title" required>
+                <div class="dialog-btn-container">
+                    <button type="submit" id="submit-project-entry">Create</button>
+                    <button type="button" id="cancel-project-entry">Cancel</button>
+                </div>
+            </form>
+        </dialog>
     </main>
     
 <script defer src="main.js"></script></body>

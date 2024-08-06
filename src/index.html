@@ -8,7 +8,10 @@
 <body>
     <header>
         <div class="logo">ToDo Or Not ToDo</div>
-        <button id="add-task-btn"><i class="fas fa-plus">Add Task</i></button>
+        <button id="add-task-btn" class="sidebar-btn">
+            <div class="icons"><i class="fas fa-plus"></i></div>
+            <div class="sidebar-btn-text">Add Task</div>
+        </button>
     </header>
     <main>
         <section id="sidebar">
@@ -24,7 +27,7 @@
                 <div class="icons"><i class="fas fa-calendar-week"></i></div>
                 <div class="sidebar-btn-text">Upcoming</div>
             </button>
-            <div class="subheading">Projects</div>
+            <div class="subheading" id="projects-subheading">Projects</div>
             <div id="projects-list"></div>
             <button class="sidebar-btn" id="create-new-project">
                 <div class="icons"><i class="fas fa-plus"></i></div>
@@ -37,17 +40,18 @@
         </section>
 
         <dialog id="new-project-dialog">
-            <h1>Create New Project</h1>
-            <div class="dialog-container">
-                <form id="project-entry">
-                    <label for="project">Project Name:</label>
-                    <input type="text" name="title" id="title" required>
-                    <div class="dialog-btn-container">
-                        <button type="submit" id="submit-project-entry">Create</button>
-                        <button type="button" id="cancel-project-entry">Cancel</button>
-                    </div>
-                </form>
-            </div>
+            <form id="project-entry" method="dialog">
+                <header>
+                    <h3>Create New Project</h3>
+                    <button class="close-dialog"><i class="fa-solid fa-xmark"></i></button>
+                </header>
+                <label for="project">Project Name:</label>
+                <input type="text" name="title" id="title" required>
+                <div class="dialog-btn-container">
+                    <button type="submit" id="submit-project-entry">Create</button>
+                    <button type="button" id="cancel-project-entry">Cancel</button>
+                </div>
+            </form>
         </dialog>
     </main>
     

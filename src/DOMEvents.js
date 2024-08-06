@@ -30,7 +30,13 @@ const DomEvents = () => {
 
     newProjectBtn.addEventListener("click", ()=> {
         newProjectDialog.showModal();
-    })
+    });
+
+    document.querySelectorAll(".close-dialog").forEach(cancelBtn => {
+        cancelBtn.addEventListener('click', () => {
+            cancelBtn.closest("dialog").close();
+        })
+    });
 
     newProjectEntry.addEventListener('submit', (event) => {
         event.preventDefault();

@@ -19,6 +19,18 @@ class UserInterface {
                 `;
         projectsList.appendChild(project);
     }
+
+    addAllProjectsToForm() {
+        const projectSelectionList = document.getElementById("project-select");
+        projectSelectionList.innerHTML = "";
+        const projects = Array.from(document.getElementById("projects-list").children);
+        projects.forEach(project => {
+            const option = document.createElement("option");
+            option.value = project.textContent || project;
+            option.textContent = project.textContent || project;
+            projectSelectionList.appendChild(option);
+        });
+    }
 }
 
 const DomEvents = () => {
@@ -34,6 +46,7 @@ const DomEvents = () => {
     });
 
     newTaskBtn.addEventListener("click", ()=> {
+        ui.addAllProjectsToForm();
         newTaskDialog.showModal();
     });
 
@@ -52,6 +65,7 @@ const DomEvents = () => {
         ui.addNewProject(project);
         newProjectDialog.close();
         newProjectEntry.reset();
+        ui.addAllProjectsToForm();
     })
 
     

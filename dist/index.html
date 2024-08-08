@@ -8,7 +8,7 @@
 <body>
     <header>
         <div class="logo">ToDo Or Not ToDo</div>
-        <button id="add-task-btn" class="sidebar-btn">
+        <button id="add-task-btn" class="sidebar-btn open-dialog">
             <div class="icons"><i class="fas fa-plus"></i></div>
             <div class="sidebar-btn-text">Add Task</div>
         </button>
@@ -28,8 +28,13 @@
                 <div class="sidebar-btn-text">Upcoming</div>
             </button>
             <div class="subheading" id="projects-subheading">Projects</div>
-            <div id="projects-list"></div>
-            <button class="sidebar-btn" id="create-new-project">
+            <div id="projects-list">
+                <button class="sidebar-btn" id="Misc">
+                    <div class="icons"><i class="fa-solid fa-hashtag"></i></div>
+                    <div class="sidebar-btn-text">Misc</div>
+                </button>
+            </div>
+            <button class="sidebar-btn open-dialog" id="create-new-project">
                 <div class="icons"><i class="fas fa-plus"></i></div>
                 <div class="sidebar-btn-text">New Project</div>
             </button>
@@ -49,7 +54,7 @@
                 <input type="text" name="title" id="title" required>
                 <div class="dialog-btn-container">
                     <button type="submit" id="submit-project-entry">Create</button>
-                    <button type="button" id="cancel-project-entry">Cancel</button>
+                    <button type="button" class="close-dialog" id="cancel-project-entry">Cancel</button>
                 </div>
             </form>
         </dialog>
@@ -64,9 +69,9 @@
                 <input type="text" id="title" placeholder="Task name" required>
                 <label for="due-date">Due date:</label>
                 <input type="date" id="due date"  required>
-                <label for="project-select">Select Project</label>
+                <label for="project-select">Select Project:</label>
                 <select id="project-select"></select>
-                <label for="priority-container">Select task priority</label>
+                <label for="priority-container">Select task priority:</label>
                 <div id="priority-container">
                     <input type="radio" id="low-priority" name="priority" value="low" required>
                     <label for="low-priority">Low</label>
@@ -76,8 +81,8 @@
                     <label for="high-priority">High</label>
                 </div>
                 <div class="dialog-btn-container">
-                    <button type="submit" id="submit-project-entry">Create</button>
-                    <button type="button" id="cancel-project-entry">Cancel</button>
+                    <button type="submit" id="submit-task-entry">Add</button>
+                    <button type="button" class="close-dialog" id="cancel-task-entry">Cancel</button>
                 </div>
             </form>
         </dialog>

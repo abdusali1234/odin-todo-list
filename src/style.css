@@ -58,6 +58,9 @@ p, h1, h2, h3, h4, h5, h6 {
   --black: rgba(57, 62, 65, 1);
   --blue: #9bc1bc;
   --shadow-color: 57deg 35% 52%;
+  --low: green;
+  --medium: orange;
+  --high: red;
   --shadow-elevation-low:
     0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
     0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
@@ -184,12 +187,20 @@ html:has(dialog[open]){
 
 dialog > form {
   display: grid;  
-  grid-template-rows : auto 1fr auto;
+  /* grid-template-rows : auto 1fr auto; */
   grid-template-columns: auto auto;
   row-gap:0.5vw;
   align-items: start;
   max-block-size: 80vh;
   max-block-size: 80dvb;
+}
+
+dialog > #new-project-dialog {
+  grid-template-rows : auto 1fr auto;
+}
+
+dialog > #new-task-dialog {
+  grid-template-rows: auto repeat(4, 1fr) auto;
 }
 
 dialog > form > header {

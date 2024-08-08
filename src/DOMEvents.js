@@ -31,6 +31,28 @@ class UserInterface {
             projectSelectionList.appendChild(option);
         });
     }
+
+    addTask(item) {
+        const cardsContainer = document.getElementById("cards-container");
+        const card = document.createElement('div');
+        card.classList.add("card", item.priority);
+        card.innerHTML = `
+                <section class="task-details">
+                    <h3 class="task-title">${item.title}</h3>
+                    <h4 class="task-project"></h4>
+                </section>
+                <section class="time-details">
+                    <p>Due by</p>
+                    <h3 class="task-date">${item.dueDate}</h3>
+                </section>
+                <section class="icons">
+                    <button class="edit-task"><i class="fas fa-edit"></i></button>
+                    <button class="delete-project"><i class="fa-solid fa-trash-can"></i></button>
+                </section>
+                `;
+        card.style.borderLeft = `solid 5px var(--${item.priority})`;
+        cardsContainer.appendChild(card);
+    }
 }
 
 const DomEvents = () => {
@@ -40,6 +62,7 @@ const DomEvents = () => {
     const newProjectEntry = document.getElementById("project-entry");
     const newTaskBtn = document.getElementById("add-task-btn");
     const newTaskDialog = document.getElementById("new-task-dialog");
+    const newTaskEntry = document.getElementById("task-entry");
 
     newProjectBtn.addEventListener("click", ()=> {
         newProjectDialog.showModal();
@@ -59,13 +82,24 @@ const DomEvents = () => {
 
     newProjectEntry.addEventListener('submit', (event) => {
         event.preventDefault();
-        console.log(newProjectEntry.title.value);
         const projectTitle = newProjectEntry.title.value;
         const project = new Project(projectTitle);
         ui.addNewProject(project);
         newProjectDialog.close();
         newProjectEntry.reset();
         ui.addAllProjectsToForm();
+    })
+
+    newTaskEntry.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const taskTitle = newTaskEntry.title.value;
+        const taskDueDate = document.getElementById('due-date').value;
+        const taskProject = document.getElementById('project-select').value;
+        const taskPriority = document.querySelector("input[name='priority']:checked").value;
+        const task = new Task(taskTitle, taskDueDate, taskProject, taskPriority);
+        ui.addTask(task);
+        newTaskDialog.close();
+        newTaskEntry.reset();
     })
 
     

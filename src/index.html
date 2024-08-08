@@ -45,8 +45,36 @@
                     <h3>Create New Project</h3>
                     <button class="close-dialog"><i class="fa-solid fa-xmark"></i></button>
                 </header>
-                <label for="project">Project Name:</label>
+                <label for="project">Project name:</label>
                 <input type="text" name="title" id="title" required>
+                <div class="dialog-btn-container">
+                    <button type="submit" id="submit-project-entry">Create</button>
+                    <button type="button" id="cancel-project-entry">Cancel</button>
+                </div>
+            </form>
+        </dialog>
+
+        <dialog id="new-task-dialog">
+            <form id="task-entry" method="dialog">
+                <header>
+                    <h3>Add New Task</h3>
+                    <button class="close-dialog"><i class="fa-solid fa-xmark"></i></button>
+                </header>
+                <label for="project">Task name:</label>
+                <input type="text" id="title" placeholder="Task name" required>
+                <label for="due-date">Due date:</label>
+                <input type="date" id="due date"  required>
+                <label for="project-select">Select Project</label>
+                <select id="project-select"></select>
+                <label for="priority-container">Select task priority</label>
+                <div id="priority-container">
+                    <input type="radio" id="low-priority" name="priority" value="low" required>
+                    <label for="low-priority">Low</label>
+                    <input type="radio" id="medium-priority" name="priority" value="medium">
+                    <label for="medium-priority">Medium</label>
+                    <input type="radio" id="high-priority" name="priority" value="high">
+                    <label for="high-priority">High</label>
+                </div>
                 <div class="dialog-btn-container">
                     <button type="submit" id="submit-project-entry">Create</button>
                     <button type="button" id="cancel-project-entry">Cancel</button>

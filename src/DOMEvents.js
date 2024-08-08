@@ -26,15 +26,21 @@ const DomEvents = () => {
     const newProjectBtn = document.getElementById("create-new-project");
     const newProjectDialog = document.getElementById("new-project-dialog");
     const newProjectEntry = document.getElementById("project-entry");
-    const cancelProjectEntryBtn = document.getElementById("cancel-project-entry");
+    const newTaskBtn = document.getElementById("add-task-btn");
+    const newTaskDialog = document.getElementById("new-task-dialog");
 
     newProjectBtn.addEventListener("click", ()=> {
         newProjectDialog.showModal();
     });
 
+    newTaskBtn.addEventListener("click", ()=> {
+        newTaskDialog.showModal();
+    });
+
     document.querySelectorAll(".close-dialog").forEach(cancelBtn => {
         cancelBtn.addEventListener('click', () => {
             cancelBtn.closest("dialog").close();
+            cancelBtn.closest("form").reset();
         })
     });
 
@@ -48,10 +54,7 @@ const DomEvents = () => {
         newProjectEntry.reset();
     })
 
-    cancelProjectEntryBtn.addEventListener('click', (event) => {
-        newProjectDialog.close();
-        newProjectEntry.reset();
-    })
+    
 }
 
 export {DomEvents, UserInterface}

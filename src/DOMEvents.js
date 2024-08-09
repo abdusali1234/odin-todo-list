@@ -22,8 +22,9 @@ class UserInterface {
 
     addAllProjectsToForm() {
         const projectSelectionList = document.getElementById("project-select");
-        projectSelectionList.innerHTML = "";
+        projectSelectionList.innerHTML = `<option value="" disabled selected>Select your option</option>`;
         const projects = Array.from(document.getElementById("projects-list").children);
+        projects.unshift(document.getElementById("general"));
         projects.forEach(project => {
             const option = document.createElement("option");
             option.value = project.textContent || project;
@@ -39,7 +40,7 @@ class UserInterface {
         card.innerHTML = `
                 <section class="task-details">
                     <h3 class="task-title">${item.title}</h3>
-                    <h4 class="task-project"></h4>
+                    <h4 class="task-project">${item.project}</h4>
                 </section>
                 <section class="time-details">
                     <p>Due by</p>
@@ -50,7 +51,7 @@ class UserInterface {
                     <button class="delete-project"><i class="fa-solid fa-trash-can"></i></button>
                 </section>
                 `;
-        card.style.borderLeft = `solid 5px var(--${item.priority})`;
+        card.style.borderLeft = `solid 15px var(--${item.priority})`;
         cardsContainer.appendChild(card);
     }
 }

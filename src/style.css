@@ -56,7 +56,7 @@ p, h1, h2, h3, h4, h5, h6 {
   --selected-red: #e94f37;
   --off-white: #f4f1bb;
   --black: rgba(57, 62, 65, 1);
-  --blue: #9bc1bc;
+  --blue: #cde0de;
   --shadow-color: 57deg 35% 52%;
   --low: green;
   --medium: orange;
@@ -189,7 +189,8 @@ dialog > form {
   display: grid;  
   /* grid-template-rows : auto 1fr auto; */
   grid-template-columns: auto auto;
-  row-gap:0.5vw;
+  row-gap:0.5vh;
+  column-gap: 0.5vw;
   align-items: start;
   max-block-size: 80vh;
   max-block-size: 80dvb;
@@ -245,4 +246,24 @@ dialog > form > header > button {
     display: flex;
     justify-content: flex-start;
     border-bottom: 2px solid var(--black);
+}
+
+.cards-container {
+  display: grid;
+  grid-auto-rows: auto;
+  padding: 5rem;
+}
+
+.card {
+  height: 5rem;
+  width: 100%;
+  border-radius: 0.5vh;
+  background-color: var(--blue);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

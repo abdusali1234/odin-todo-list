@@ -117,9 +117,6 @@ const DomEvents = () => {
         StorageController.saveTask(task);
     })
 
-    document.addEventListener("DOMContentLoaded", (event) => {
-        ui.render();
-    })
 
     
 }

@@ -1,5 +1,7 @@
 import Task from "./task";
 import Project from "./project";
+import StorageController from "./storage";
+
 
 class UserInterface {
 
@@ -54,6 +56,17 @@ class UserInterface {
         card.style.borderLeft = `solid 15px var(--${item.priority})`;
         cardsContainer.appendChild(card);
     }
+
+    displayTasks() {
+        StorageController.getTasks().forEach((task) => {
+            this.addTask(task);
+        })
+
+    }
+
+    render() {
+        this.displayTasks();
+    }
 }
 
 const DomEvents = () => {
@@ -95,12 +108,17 @@ const DomEvents = () => {
         event.preventDefault();
         const taskTitle = newTaskEntry.title.value;
         const taskDueDate = document.getElementById('due-date').value;
-        const taskProject = document.getElementById('project-select').value;
+        const taskProject = document.getElementById('project-select').value.trim();
         const taskPriority = document.querySelector("input[name='priority']:checked").value;
         const task = new Task(taskTitle, taskDueDate, taskProject, taskPriority);
         ui.addTask(task);
         newTaskDialog.close();
         newTaskEntry.reset();
+        StorageController.saveTask(task);
+    })
+
+    document.addEventListener("DOMContentLoaded", (event) => {
+        ui.render();
     })
 
     

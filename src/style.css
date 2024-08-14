@@ -107,7 +107,7 @@ main {
     flex-direction: column;
     grid-column: 1;
     padding: 1vh;
-    gap: 2vh 2vh;
+    row-gap: 0.5rem;
     border-right: 3px solid var(--black);
     align-items: flex-end;
 }
@@ -119,8 +119,8 @@ main {
 
 
 .sidebar-btn {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: flex-start;
     gap: 0.5rem;
     align-items: center;
     background-color: var(--light-red);
@@ -139,8 +139,9 @@ main {
 
 .sidebar-btn-text {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
+  text-align: left;
 }
 
 .delete-project {
@@ -153,6 +154,7 @@ main {
 #projects-list {
   display: flex;
   flex-direction: column;
+  row-gap: 0.5rem;
 }
 
 dialog {

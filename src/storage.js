@@ -10,15 +10,25 @@ export default class StorageController {
     //     }
     // }
 
-    static tasks = new Array() ? (localStorage.getItem('tasks') === null) : JSON.parse(localStorage.getItem('tasks'));
+    static tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    static projects = JSON.parse(localStorage.getItem('projects')) || [];
 
     static saveTask(task) {
-        tasks.push(task);
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        this.tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
     }
 
     static getTasks(){
         return JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    static saveProject(project) {
+        this.projects.push(project);
+        localStorage.setItem('projects', JSON.stringify(this.projects));
+    }
+
+    static getProjects(){
+        return JSON.parse(localStorage.getItem('projects'));
     }
 }
 

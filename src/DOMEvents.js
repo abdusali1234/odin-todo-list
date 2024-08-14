@@ -5,7 +5,7 @@ import StorageController from "./storage";
 
 class UserInterface {
 
-    addNewProject(item){
+    addProject(item){
         const projectsList = document.getElementById("projects-list");
         const project = document.createElement("button");
         project.classList.add("sidebar-btn");
@@ -58,14 +58,24 @@ class UserInterface {
     }
 
     displayTasks() {
+        const cardsContainer = document.getElementById("cards-container");
+        cardsContainer.innerHTML = '';
         StorageController.getTasks().forEach((task) => {
             this.addTask(task);
         })
+    }
 
+    displayProjects(){
+        StorageController.getProjects().forEach((project) => {
+            if (project.title !== "Work" || project.title !== "Exercise"){
+                this.addProject(project);
+            }
+        })
     }
 
     render() {
         this.displayTasks();
+        this.displayProjects();
     }
 }
 
@@ -98,10 +108,11 @@ const DomEvents = () => {
         event.preventDefault();
         const projectTitle = newProjectEntry.title.value;
         const project = new Project(projectTitle);
-        ui.addNewProject(project);
+        ui.addProject(project);
         newProjectDialog.close();
         newProjectEntry.reset();
         ui.addAllProjectsToForm();
+        StorageController.saveProject(project);
     })
 
     newTaskEntry.addEventListener('submit', (event) => {
@@ -117,6 +128,9 @@ const DomEvents = () => {
         StorageController.saveTask(task);
     })
 
+    document.addEventListener("DOMContentLoaded", (event) => {
+        ui.render();
+    })
 
     
 }

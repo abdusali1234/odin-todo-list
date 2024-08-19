@@ -131,7 +131,9 @@ const DomEvents = () => {
     })
 
     document.querySelectorAll("input[name=task-check]").forEach(checkBox => {
-        checkBox.addEventListener('change', (event) =>{
+        checkBox.addEventListener('click', (event) =>{
+            console.log(event.target);
+            console.log(checkBox);
             console.log("something's changed!!!")
             if (event.target.checked){
                 console.log("checked!")

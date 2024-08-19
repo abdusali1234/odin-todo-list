@@ -25,12 +25,10 @@ class UserInterface {
     addAllProjectsToForm() {
         const projectSelectionList = document.getElementById("project-select");
         projectSelectionList.innerHTML = `<option value="" disabled selected>Select your option</option>`;
-        const projects = Array.from(document.getElementById("projects-list").children);
-        projects.unshift(document.getElementById("general"));
-        projects.forEach(project => {
+        StorageController.getProjects().forEach(project => {
             const option = document.createElement("option");
-            option.value = project.textContent || project;
-            option.textContent = project.textContent || project;
+            option.value = project.textContent || project.title;
+            option.textContent = project.textContent || project.title;
             projectSelectionList.appendChild(option);
         });
     }
@@ -47,6 +45,10 @@ class UserInterface {
                 <section class="time-details">
                     <p>Due by</p>
                     <h3 class="task-date">${item.dueDate}</h3>
+                </section>
+                <section>
+                    <label for="task-check">Task Complete?</label>
+                    <input type="checkbox"  id="task-check" name="task-check">
                 </section>
                 <section class="icons">
                     <button class="edit-task"><i class="fas fa-edit"></i></button>
@@ -128,6 +130,19 @@ const DomEvents = () => {
         StorageController.saveTask(task);
     })
 
+    document.querySelectorAll("input[name=task-check]").forEach(checkBox => {
+        checkBox.addEventListener('change', (event) =>{
+            console.log("something's changed!!!")
+            if (event.target.checked){
+                console.log("checked!")
+                const card = checkBox.closest("div");
+                console.log(card);
+                card.style.setProperty("text-decoration", "line-through");
+            }
+        })
+    })
+
+    
     document.addEventListener("DOMContentLoaded", (event) => {
         ui.render();
     })

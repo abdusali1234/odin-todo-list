@@ -1,34 +1,48 @@
 import { UserInterface } from "./DOMEvents";
 import Project from "./project";
+import Task from "./task";
 
 export default class StorageController {
-    // constructor(tasks){
-    //     if (localStorage.getItem('tasks') === null){
-    //         this.tasks = new Array();
-    //     }else {
-    //         this.tasks = JSON.parse(localStorage.getItem('tasks'));
-    //     }
-    // }
 
     static tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     static projects = JSON.parse(localStorage.getItem('projects')) || [];
 
     static saveTask(task) {
-        this.tasks.push(task);
-        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        StorageController.tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(StorageController.tasks));
     }
 
     static getTasks(){
-        return JSON.parse(localStorage.getItem('tasks'));
+        return StorageController.tasks;
     }
 
     static saveProject(project) {
-        this.projects.push(project);
-        localStorage.setItem('projects', JSON.stringify(this.projects));
+        StorageController.projects.push(project);
+        localStorage.setItem('projects', JSON.stringify(StorageController.projects));
     }
 
     static getProjects(){
-        return JSON.parse(localStorage.getItem('projects'));
+        return StorageController.projects;
     }
+
+    // TO DO:
+    // Delete Projects and tasks
+    // edit tasks
+}
+
+// Populate with some projects and tasks
+if (!localStorage.getItem('tasks')||!localStorage.getItem('projects')){
+    StorageController.saveProject(new Project("General"));
+    StorageController.saveProject(new Project("Work"));
+    StorageController.saveProject(new Project("Exercise"));
+    StorageController.saveProject(new Project("Escape Vorkuta"));
+    StorageController.saveTask(new Task("Step 1: Secure the keys", "1963-10-06", "Escape Vorkuta", "high"));
+    StorageController.saveTask(new Task("Step 2: Ascend from darkness", "1963-10-06", "Escape Vorkuta", "high"));
+    StorageController.saveTask(new Task("Step 3: Rain fire", "1963-10-06", "Escape Vorkuta", "high"));
+    StorageController.saveTask(new Task("Step 4: Unleash the Horde", "1963-10-06", "Escape Vorkuta", "high"));
+    StorageController.saveTask(new Task("Step 5: Skewer the winged beast", "1963-10-06", "Escape Vorkuta", "high"));
+    StorageController.saveTask(new Task("Step 6: Wield a first of Iron", "1963-10-06", "Escape Vorkuta", "high"));
+    StorageController.saveTask(new Task("Step 7: Raise hell", "1963-10-06", "Escape Vorkuta", "high"));
+    StorageController.saveTask(new Task("Step 8: Freedom", "1963-10-06", "Escape Vorkuta", "high"));
 }
 

@@ -47,8 +47,8 @@ class UserInterface {
                     <h3 class="task-date">${item.dueDate}</h3>
                 </section>
                 <section>
-                    <label for="task-check">Task Complete?</label>
-                    <input type="checkbox"  id="task-check" name="task-check">
+                    <label for="toggle-complete">Task Complete?</label>
+                    <input type="checkbox" class="toggle-complete" name="toggle-complete">
                 </section>
                 <section class="icons">
                     <button class="edit-task"><i class="fas fa-edit"></i></button>
@@ -130,14 +130,15 @@ const DomEvents = () => {
         StorageController.saveTask(task);
     })
 
-    document.querySelectorAll("input[name=task-check]").forEach(checkBox => {
-        checkBox.addEventListener('click', (event) =>{
+    document.querySelectorAll("input[name='toggle-complete']").forEach(checkbox => {
+        checkbox.addEventListener('change', (event) =>{
+            event.preventDefault();
             console.log(event.target);
-            console.log(checkBox);
+            console.log(checkbox);
             console.log("something's changed!!!")
             if (event.target.checked){
                 console.log("checked!")
-                const card = checkBox.closest("div");
+                const card = checkbox.closest("div");
                 console.log(card);
                 card.style.setProperty("text-decoration", "line-through");
             }

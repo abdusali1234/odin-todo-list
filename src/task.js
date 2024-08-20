@@ -5,4 +5,5 @@ export default class Task {
         this.project = project;
         this.priority = priority;
     }
+    static taskIndex = 0;
 }

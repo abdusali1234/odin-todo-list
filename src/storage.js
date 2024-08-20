@@ -16,6 +16,16 @@ export default class StorageController {
         return StorageController.tasks;
     }
 
+    // NOT WORKING - TO FIX!
+    static removeTask(title){
+        for (let x in StorageController.tasks){
+            if (StorageController.tasks[x].title === title){
+                StorageController.tasks.splice(x, 1);
+            }
+        }
+
+    }
+
     static saveProject(project) {
         StorageController.projects.push(project);
         localStorage.setItem('projects', JSON.stringify(StorageController.projects));

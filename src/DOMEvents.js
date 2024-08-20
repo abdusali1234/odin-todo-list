@@ -77,7 +77,35 @@ class UserInterface {
 
     render() {
         this.displayTasks();
+
+
+        document.querySelectorAll("input[name='toggle-complete']").forEach(checkbox => {
+            checkbox.addEventListener('change', (event) =>{
+                event.preventDefault();
+                const card = checkbox.closest("div");
+                console.log(card);
+                if (event.target.checked){
+                    console.log("checked!")
+                    card.style.setProperty("text-decoration", "line-through");
+                    card.classList.add('checked');
+                } else {
+                    card.style.setProperty("text-decoration", "none");
+                    if (card.classList.contains('checked')){
+                        card.classList.remove('checked');
+                    }
+                }
+            })
+        })
+
         this.displayProjects();
+
+        document.querySelectorAll(".delete-project").forEach(deleteBtn => {
+            deleteBtn.addEventListener('click', () => {
+                const taskTitle = deleteBtn.closest("div").querySelector(".task-title").textContent;
+                // Not working. to fix
+                StorageController.removeTask(taskTitle);
+            })
+        })
     }
 }
 
@@ -130,20 +158,9 @@ const DomEvents = () => {
         StorageController.saveTask(task);
     })
 
-    document.querySelectorAll("input[name='toggle-complete']").forEach(checkbox => {
-        checkbox.addEventListener('change', (event) =>{
-            event.preventDefault();
-            console.log(event.target);
-            console.log(checkbox);
-            console.log("something's changed!!!")
-            if (event.target.checked){
-                console.log("checked!")
-                const card = checkbox.closest("div");
-                console.log(card);
-                card.style.setProperty("text-decoration", "line-through");
-            }
-        })
-    })
+    
+
+    
 
     
     document.addEventListener("DOMContentLoaded", (event) => {

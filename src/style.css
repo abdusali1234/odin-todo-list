@@ -144,7 +144,8 @@ main {
   text-align: left;
 }
 
-.delete-project {
+.delete-project,
+.delete-task {
   background-color: var(--light-red);
   color: var(var(--black));
   border: solid 1px var(--black);

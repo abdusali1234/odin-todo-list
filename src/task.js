@@ -52,10 +52,11 @@ export default class Task {
         this._complete = !this._complete;
     }
 
-    static taskId = 0;
+    static taskId = JSON.parse(localStorage.getItem('taskId')) || 0;
 
     static generateId(){
-        console.log(this.taskId);
-        return Task.taskId++;
+        Task.taskId++;
+        localStorage.setItem('taskId', Task.taskId);
+        return Task.taskId;
     }
 }

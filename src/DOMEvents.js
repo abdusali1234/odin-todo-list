@@ -1,6 +1,7 @@
 import Task from "./task";
 import Project from "./project";
 import StorageController from "./storage";
+import { ta } from "date-fns/locale";
 
 
 class UserInterface {
@@ -75,16 +76,22 @@ class UserInterface {
         const cardsContainer = document.getElementById("cards-container");
         cardsContainer.innerHTML = '';
         StorageController.getAllTasks().forEach((task) => {
-            this.addTask(task);
-        })
+            const taskAsClass = new Task(task._title, task._dueDate, task._project, task._priority, task._complete, task._id);
+            this.addTask(taskAsClass);
+            task = taskAsClass;
+        });
+        StorageController.saveAllTasks();
     }
 
     displayProjects(){
         const projectsList = document.getElementById("projects-list");
         projectsList.innerHTML = '';
         StorageController.getAllProjects().forEach((project) => {
-            this.addProject(project); 
-        })
+            this.addProject(new Project(project._title)); 
+            // console.log(project);
+            // console.log(project.constructor.name);
+        });
+        StorageController.saveAllProjects();
     }
 
     render() {
@@ -100,8 +107,15 @@ class UserInterface {
                 const cardDataId = card.getAttribute("data-id");
                 console.log(cardDataId);
                 const task = StorageController.getTaskById(parseInt(cardDataId));
-                console.log(task);
-                task.toggleComplete();
+                const taskAsClass = new Task(task._title, task._dueDate, task._project, task._priority, task._complete, task._id);
+                console.log(taskAsClass);
+                console.log(taskAsClass.constructor.name);
+                console.log(taskAsClass._id);
+                taskAsClass.toggleComplete();
+                const taskIndex = StorageController.tasks.findIndex(task => task._id === parseInt(cardDataId));
+                console.log(taskIndex);
+                StorageController.tasks[taskIndex] = taskAsClass;
+                console.log(taskAsClass);
                 StorageController.saveAllTasks();
                 this.render();
             })
@@ -109,12 +123,22 @@ class UserInterface {
 
         
 
+        
+
         document.querySelectorAll(".delete-task").forEach(deleteBtn => {
             deleteBtn.addEventListener('click', () => {
                 const taskId = deleteBtn.closest("div").getAttribute("data-id");
-                // Not working. to fix
                 StorageController.deleteTask(parseInt(taskId));
-                StorageController.saveAllTasks();
+                this.render();
+            })
+        });
+
+        document.querySelectorAll(".delete-project").forEach(deleteBtn => {
+            deleteBtn.addEventListener('click', () => {
+                const projectBtn = deleteBtn.parentElement.parentElement;
+                console.log(projectBtn);
+                const projectName = projectBtn.querySelector(".sidebar-btn-text").textContent;
+                StorageController.deleteProject(projectName);
                 this.render();
             })
         })
@@ -150,12 +174,12 @@ const DomEvents = () => {
         event.preventDefault();
         const projectTitle = newProjectEntry.title.value;
         const project = new Project(projectTitle);
-        ui.addProject(project);
         newProjectDialog.close();
         newProjectEntry.reset();
         ui.addAllProjectsToForm();
         StorageController.addProject(project);
         StorageController.saveAllProjects();
+        ui.render();
     })
 
     newTaskEntry.addEventListener('submit', (event) => {
@@ -165,11 +189,14 @@ const DomEvents = () => {
         const taskProject = document.getElementById('project-select').value.trim();
         const taskPriority = document.querySelector("input[name='priority']:checked").value;
         const task = new Task(taskTitle, taskDueDate, taskProject, taskPriority, false, Task.generateId());
-        ui.addTask(task);
-        newTaskDialog.close();
-        newTaskEntry.reset();
+        console.log(task);
+        console.log(task.constructor.name);
         StorageController.addTask(task);
         StorageController.saveAllTasks();
+        ui.render();
+        newTaskDialog.close();
+        newTaskEntry.reset();
+        
     })
     
     document.addEventListener("DOMContentLoaded", (event) => {

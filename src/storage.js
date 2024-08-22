@@ -9,7 +9,6 @@ export default class StorageController {
 
     static addTask(task) {
         StorageController.tasks.push(task);
-        StorageController.saveAllTasks();
     }
 
     static getAllTasks(){
@@ -22,6 +21,7 @@ export default class StorageController {
 
     static deleteTask(taskId){
         StorageController.tasks = StorageController.tasks.filter((task) => task._id !== taskId);
+        StorageController.tasks = StorageController.tasks.filter(task => task != null);
         StorageController.saveAllTasks();
         // const taskIndex = StorageController.tasks.findIndex((task) => task.id === taskId);
         // if (taskIndex !== -1){
@@ -46,14 +46,11 @@ export default class StorageController {
     }
 
     static deleteProject(projectName){
-        // const projectIndex = StorageController.projects.findIndex((project) => project.title === projectName);
-        // if (projectIndex !== -1){
-        //     StorageController.projects.splice(projectIndex, 1);
-        // } else {
-        //     console.error(`Cannot find task with ID ${projectName}`);
-        // };
         StorageController.projects = StorageController.projects.filter((project) => project._title !== projectName);
+        StorageController.projects = StorageController.projects.filter(project => project != null);
         StorageController.tasks = StorageController.tasks.filter((task) => task._project !== projectName );
+        StorageController.tasks = StorageController.tasks.filter(task => task != null)
+
         StorageController.saveAllProjects();
         StorageController.saveAllTasks();
 

@@ -1,11 +1,11 @@
 export default class Task {
-    constructor(title, dueDate, project, priority, _complete, _id) {
+    constructor(title, dueDate, project, priority, complete, id) {
         this._title = title;
         this._dueDate = dueDate;
         this._project = project;
         this._priority = priority;
-        this._complete = false;
-        this._id = Task.generateId();
+        this._complete = complete;
+        this._id = id;
     }
 
     get id() {
@@ -55,6 +55,7 @@ export default class Task {
     static taskId = 0;
 
     static generateId(){
+        console.log(this.taskId);
         return Task.taskId++;
     }
 }

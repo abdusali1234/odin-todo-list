@@ -80,14 +80,16 @@ class UserInterface {
     }
 
     displayProjects(){
+        const projectsList = document.getElementById("projects-list");
+        projectsList.innerHTML = '';
         StorageController.getAllProjects().forEach((project) => {
-            if (project.title !== "Work" || project.title !== "Exercise"){
-                this.addProject(project);
-            }
+            this.addProject(project); 
         })
     }
 
     render() {
+        this.displayTasks();
+        this.displayProjects();
         
 
 
@@ -97,30 +99,23 @@ class UserInterface {
                 const card = checkbox.closest("div");
                 const cardDataId = card.getAttribute("data-id");
                 console.log(cardDataId);
-                if (event.target.checked){
-                    console.log("checked!")
-                    card.style.setProperty("text-decoration", "line-through");
-                    card.classList.add('checked');
-                } else {
-                    card.style.setProperty("text-decoration", "none");
-                    if (card.classList.contains('checked')){
-                        card.classList.remove('checked');
-                    }
-                }
+                const task = StorageController.getTaskById(parseInt(cardDataId));
+                console.log(task);
+                task.toggleComplete();
+                StorageController.saveAllTasks();
+                this.render();
             })
         });
 
-        this.displayTasks();
-
-        this.displayProjects();
+        
 
         document.querySelectorAll(".delete-task").forEach(deleteBtn => {
             deleteBtn.addEventListener('click', () => {
                 const taskId = deleteBtn.closest("div").getAttribute("data-id");
                 // Not working. to fix
-                StorageController.deleteTask(parseInt(taskId)-1);
+                StorageController.deleteTask(parseInt(taskId));
                 StorageController.saveAllTasks();
-                this.displayTasks();
+                this.render();
             })
         })
     }
@@ -169,37 +164,15 @@ const DomEvents = () => {
         const taskDueDate = document.getElementById('due-date').value;
         const taskProject = document.getElementById('project-select').value.trim();
         const taskPriority = document.querySelector("input[name='priority']:checked").value;
-        const task = new Task(taskTitle, taskDueDate, taskProject, taskPriority, false, this.generateId());
+        const task = new Task(taskTitle, taskDueDate, taskProject, taskPriority, false, Task.generateId());
         ui.addTask(task);
         newTaskDialog.close();
         newTaskEntry.reset();
         StorageController.addTask(task);
         StorageController.saveAllTasks();
     })
-
-    
-
-    
-
     
     document.addEventListener("DOMContentLoaded", (event) => {
-        // Populate with some projects and tasks
-    if (!localStorage.getItem('tasks')||!localStorage.getItem('projects')){
-        StorageController.addProject(new Project("General"));
-        StorageController.addProject(new Project("Work"));
-        StorageController.addProject(new Project("Exercise"));
-        StorageController.addProject(new Project("Escape Vorkuta"));
-        StorageController.addTask(new Task("Step 1: Secure the keys", "1963-10-06", "Escape Vorkuta", "high", true, Task.generateId()));
-        StorageController.addTask(new Task("Step 2: Ascend from darkness", "1963-10-06", "Escape Vorkuta", "high", true, Task.generateId()));
-        StorageController.addTask(new Task("Step 3: Rain fire", "1963-10-06", "Escape Vorkuta", "high", true, Task.generateId()));
-        StorageController.addTask(new Task("Step 4: Unleash the Horde", "1963-10-06", "Escape Vorkuta", "high", true, Task.generateId()));
-        StorageController.addTask(new Task("Step 5: Skewer the winged beast", "1963-10-06", "Escape Vorkuta", "high", false, Task.generateId()));
-        StorageController.addTask(new Task("Step 6: Wield a first of Iron", "1963-10-06", "Escape Vorkuta", "high", false, Task.generateId()));
-        StorageController.addTask(new Task("Step 7: Raise hell", "1963-10-06", "Escape Vorkuta", "high", false, Task.generateId()));
-        StorageController.addTask(new Task("Step 8: Freedom", "1963-10-06", "Escape Vorkuta", "high", false, Task.generateId()));
-        StorageController.saveAllProjects();
-        StorageController.saveAllTasks();
-    }
         ui.render();
     })
 

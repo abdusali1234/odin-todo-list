@@ -23,12 +23,6 @@ export default class StorageController {
         StorageController.tasks = StorageController.tasks.filter((task) => task._id !== taskId);
         StorageController.tasks = StorageController.tasks.filter(task => task != null);
         StorageController.saveAllTasks();
-        // const taskIndex = StorageController.tasks.findIndex((task) => task.id === taskId);
-        // if (taskIndex !== -1){
-        //     StorageController.tasks.splice(taskIndex, 1);
-        // } else {
-        //     console.error(`Cannot find task with ID ${taskId}`);
-        // }
     }
 
     static saveAllTasks(){
@@ -61,7 +55,6 @@ export default class StorageController {
     }
 
     // TO DO:
-    // Delete Projects and tasks
     // edit tasks
 }
 

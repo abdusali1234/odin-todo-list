@@ -1,6 +1,7 @@
 import Task from "./task";
 import Project from "./project";
 import StorageController from "./storage";
+import DateController from "./date";
 import { ta } from "date-fns/locale";
 
 
@@ -10,7 +11,7 @@ class UserInterface {
         const projectsList = document.getElementById("projects-list");
         const project = document.createElement("button");
         project.classList.add("sidebar-btn");
-        project.setAttribute("id", `${item._title}`);
+        project.setAttribute("id", `${item._title.replace(/\W+/g, '-').toLowerCase()}`);
         project.innerHTML = `
                 <div class="icons">
                     <i class="fa-solid fa-hashtag"></i>
@@ -34,10 +35,10 @@ class UserInterface {
         });
     }
 
-    addTask(item) {
+    addTask(item, selectedClass=localStorage.getItem("selectedProject")) {
         const cardsContainer = document.getElementById("cards-container");
         const card = document.createElement('div');
-        card.classList.add("card", item._priority);
+        card.classList.add("card", `${item._project.replace(/\W+/g, '-').toLowerCase()}`, item._priority);
         card.setAttribute("data-id", item._id);
         card.innerHTML = `
                 <section class="task-details">
@@ -62,13 +63,30 @@ class UserInterface {
             card.querySelector("input[name='toggle-complete']").checked=true;
             card.style.setProperty("text-decoration", "line-through");
             card.classList.add('checked');
+            if (card.classList.contains('overdue')){
+                card.classList.remove('overdue');
+            }
         } else {
             card.style.setProperty("text-decoration", "none");
             if (card.classList.contains('checked')){
                 card.classList.remove('checked');
+                if (DateController.checkIfOverdue(item._dueDate)){
+                    card.classList.add('overdue');
+                    console.log('overdue!')
+                }
             };
 
         };
+        if(DateController.checkIfDueToday){
+            card.classList.add('today');
+        } else if (DateController.checkIfDueThisWeek){
+            card.classList.add('week');
+        }
+        if (card.classList.contains(selectedClass)){
+            card.style.display = "flex";
+        } else {
+            card.style.display = "none";
+        }
         cardsContainer.appendChild(card);
     }
 
@@ -88,60 +106,68 @@ class UserInterface {
         projectsList.innerHTML = '';
         StorageController.getAllProjects().forEach((project) => {
             this.addProject(new Project(project._title)); 
-            // console.log(project);
-            // console.log(project.constructor.name);
         });
         StorageController.saveAllProjects();
     }
 
-    render() {
-        this.displayTasks();
+    render(desiredProject = localStorage.getItem("selectedProject")) {
+        this.displayTasks(desiredProject);
         this.displayProjects();
         
 
 
+        // toggle tasks as complete/incomplete
         document.querySelectorAll("input[name='toggle-complete']").forEach(checkbox => {
             checkbox.addEventListener('change', (event) =>{
                 event.preventDefault();
                 const card = checkbox.closest("div");
                 const cardDataId = card.getAttribute("data-id");
-                console.log(cardDataId);
                 const task = StorageController.getTaskById(parseInt(cardDataId));
                 const taskAsClass = new Task(task._title, task._dueDate, task._project, task._priority, task._complete, task._id);
-                console.log(taskAsClass);
-                console.log(taskAsClass.constructor.name);
-                console.log(taskAsClass._id);
                 taskAsClass.toggleComplete();
                 const taskIndex = StorageController.tasks.findIndex(task => task._id === parseInt(cardDataId));
-                console.log(taskIndex);
                 StorageController.tasks[taskIndex] = taskAsClass;
-                console.log(taskAsClass);
                 StorageController.saveAllTasks();
-                this.render();
+                this.render(localStorage.getItem("selectedProject"));
             })
         });
 
-        
+        // filter tasks by project
+        document.querySelectorAll(".sidebar-btn").forEach(projectBtn => {
+            projectBtn.addEventListener('click', () => {
+                console.log(document.querySelectorAll(".sidebar-btn"))
+                projectBtn.style.borderColor = "#ffffff";
+                const projectId = projectBtn.id;
+                const projectTitle = projectBtn.querySelector(".sidebar-btn-text").innerHTML;
+                console.log(document.querySelector("#tasks-subheading").innerHTML)
+                document.querySelector("#tasks-subheading").textContent = projectTitle;
+                console.log(document.querySelector("#tasks-subheading").innerHTML)
+                localStorage.setItem("selectedProject", projectId);
+                this.render(localStorage.getItem("selectedProject"));
+            });
+        })
 
         
 
+        
+        // delete task
         document.querySelectorAll(".delete-task").forEach(deleteBtn => {
             deleteBtn.addEventListener('click', () => {
                 const taskId = deleteBtn.closest("div").getAttribute("data-id");
                 StorageController.deleteTask(parseInt(taskId));
-                this.render();
+                this.render(localStorage.getItem("selectedProject"));
             })
         });
 
+        // delete project and tasks associated with project
         document.querySelectorAll(".delete-project").forEach(deleteBtn => {
             deleteBtn.addEventListener('click', () => {
                 const projectBtn = deleteBtn.parentElement.parentElement;
-                console.log(projectBtn);
                 const projectName = projectBtn.querySelector(".sidebar-btn-text").textContent;
                 StorageController.deleteProject(projectName);
-                this.render();
+                this.render(localStorage.getItem("selectedProject"));
             })
-        })
+        });
     }
 }
 
@@ -179,7 +205,7 @@ const DomEvents = () => {
         ui.addAllProjectsToForm();
         StorageController.addProject(project);
         StorageController.saveAllProjects();
-        ui.render();
+        ui.render(localStorage.getItem("selectedProject"));
     })
 
     newTaskEntry.addEventListener('submit', (event) => {
@@ -193,15 +219,20 @@ const DomEvents = () => {
         console.log(task.constructor.name);
         StorageController.addTask(task);
         StorageController.saveAllTasks();
-        ui.render();
+        ui.render(localStorage.getItem("selectedProject"));
         newTaskDialog.close();
         newTaskEntry.reset();
         
     })
     
     document.addEventListener("DOMContentLoaded", (event) => {
-        ui.render();
+        localStorage.setItem("selectedProject", "general");
+        ui.render(localStorage.getItem("selectedProject"));
     })
+
+    //TODO:
+    // create dialog to edit tasks
+    // filter tasks by day, upcoming, and projects
 
     
 }

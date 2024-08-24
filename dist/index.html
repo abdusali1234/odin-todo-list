@@ -8,7 +8,7 @@
 <body>
     <header>
         <div class="logo">ToDo Or Not ToDo</div>
-        <button id="add-task-btn" class="sidebar-btn open-dialog">
+        <button id="add-task-btn" class="open-dialog">
             <div class="icons"><i class="fas fa-plus"></i></div>
             <div class="sidebar-btn-text">Add Task</div>
         </button>
@@ -23,16 +23,20 @@
                 <div class="icons"><i class="fas fa-calendar-week"></i></div>
                 <div class="sidebar-btn-text">Upcoming</div>
             </button>
+            <button class="sidebar-btn" id="overdue">
+                <div class="icons"><i class="fas fa-calendar-week"></i></div>
+                <div class="sidebar-btn-text">Overdue</div>
+            </button>
             <div class="subheading" id="projects-subheading">Projects</div>
             <div id="projects-list">
             </div>
-            <button class="sidebar-btn open-dialog" id="create-new-project">
+            <button class="open-dialog" id="create-new-project">
                 <div class="icons"><i class="fas fa-plus"></i></div>
                 <div class="sidebar-btn-text">New Project</div>
             </button>
         </section>
         <section id="tasks-container">
-            <div class="subheading">Today</div>
+            <div class="subheading" id="tasks-subheading">Today</div>
             <div id="cards-container"></div>
         </section>
 

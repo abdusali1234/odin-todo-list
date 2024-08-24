@@ -8,7 +8,7 @@ export default class DateController{
     }
 
     static checkIfDueThisWeek(dueDate){
-        return isSameWeek(DateController.today, dueDate) && (isAfter(DateController.today, dueDate) >= 0);
+        return isSameWeek(DateController.today, dueDate) && (isAfter(DateController.today, dueDate));
     }
 
     static checkIfOverdue(dueDate){

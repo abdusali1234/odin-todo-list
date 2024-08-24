@@ -77,9 +77,10 @@ class UserInterface {
             };
 
         };
-        if(DateController.checkIfDueToday){
+        if(DateController.checkIfDueToday(item._dueDate)){
             card.classList.add('today');
-        } else if (DateController.checkIfDueThisWeek){
+        } 
+        if (DateController.checkIfDueThisWeek(item._dueDate)){
             card.classList.add('week');
         }
         if (card.classList.contains(selectedClass)){
@@ -87,6 +88,10 @@ class UserInterface {
         } else {
             card.style.display = "none";
         }
+        console.log(item._dueDate, DateController.checkIfDueToday(item._dueDate));
+        console.log(item._dueDate, DateController.checkIfDueThisWeek(item._dueDate));
+        console.log(item._dueDate, DateController.checkIfOverdue(item._dueDate))
+
         cardsContainer.appendChild(card);
     }
 
@@ -137,12 +142,12 @@ class UserInterface {
             projectBtn.addEventListener('click', () => {
                 console.log(document.querySelectorAll(".sidebar-btn"))
                 projectBtn.style.borderColor = "#ffffff";
+                projectBtn.style.Color = "#ffffff";
                 const projectId = projectBtn.id;
-                const projectTitle = projectBtn.querySelector(".sidebar-btn-text").innerHTML;
-                console.log(document.querySelector("#tasks-subheading").innerHTML)
-                document.querySelector("#tasks-subheading").textContent = projectTitle;
-                console.log(document.querySelector("#tasks-subheading").innerHTML)
+                console.log(projectId);
                 localStorage.setItem("selectedProject", projectId);
+                const projectTitle = projectBtn.querySelector(".sidebar-btn-text").innerHTML;
+                document.querySelector("#tasks-subheading").textContent = projectTitle;
                 this.render(localStorage.getItem("selectedProject"));
             });
         })

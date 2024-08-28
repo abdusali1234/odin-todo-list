@@ -131,11 +131,13 @@ main {
     width: max(6.5vh, 6.5vw);
 }
 
+
 .icons {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 0 0.5vw;
+  font-size: 1rem;
 }
 
 .sidebar-btn-text {

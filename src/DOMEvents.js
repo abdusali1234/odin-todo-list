@@ -1,9 +1,9 @@
 import Task from "./task";
 import Project from "./project";
 import StorageController from "./storage";
-import DateController from "./date";
-import { ta } from "date-fns/locale";
+import { isSameDay, isSameWeek, isBefore, isAfter, format } from "date-fns";
 
+const today = format(new Date(), "yyyy-MM-dd");
 
 class UserInterface {
 
@@ -35,6 +35,38 @@ class UserInterface {
         });
     }
 
+    addTimeClassToCard(el, dueDate){
+        if (isSameDay(today, dueDate)){
+            el.classList.add('today');
+            if (el.classList.contains('week')){
+                el.classList.remove('week');
+            }
+            if (el.classList.contains('overdue')){
+                el.classList.remove('overdue');
+            }
+        }
+        if (isSameWeek(today, dueDate)){
+            if (isAfter(dueDate, today)){
+                el.classList.add('week');
+                el.classList.remove('today');
+            }
+            if (el.classList.contains('overdue')){
+                el.classList.remove('overdue');
+            }
+        }
+        if (isBefore(dueDate, today)){
+            el.classList.add('overdue');
+            if (el.classList.contains('today')){
+                el.classList.remove('today');
+            }
+            if (el.classList.contains('week')){
+                el.classList.remove('week');
+            }
+        }
+
+
+    }
+
     addTask(item, selectedClass=localStorage.getItem("selectedProject")) {
         const cardsContainer = document.getElementById("cards-container");
         const card = document.createElement('div');
@@ -54,11 +86,11 @@ class UserInterface {
                     <input type="checkbox" class="toggle-complete" name="toggle-complete">
                 </section>
                 <section class="icons">
-                    <button class="edit-task"><i class="fas fa-edit"></i></button>
                     <button class="delete-task"><i class="fa-solid fa-trash-can"></i></button>
                 </section>
                 `;
         card.style.borderLeft = `solid 15px var(--${item._priority})`;
+        this.addTimeClassToCard(card, item._dueDate);
         if (item._complete === true){
             card.querySelector("input[name='toggle-complete']").checked=true;
             card.style.setProperty("text-decoration", "line-through");
@@ -70,28 +102,14 @@ class UserInterface {
             card.style.setProperty("text-decoration", "none");
             if (card.classList.contains('checked')){
                 card.classList.remove('checked');
-                if (DateController.checkIfOverdue(item._dueDate)){
-                    card.classList.add('overdue');
-                    console.log('overdue!')
-                }
             };
 
         };
-        if(DateController.checkIfDueToday(item._dueDate)){
-            card.classList.add('today');
-        } 
-        if (DateController.checkIfDueThisWeek(item._dueDate)){
-            card.classList.add('week');
-        }
         if (card.classList.contains(selectedClass)){
             card.style.display = "flex";
         } else {
             card.style.display = "none";
         }
-        console.log(item._dueDate, DateController.checkIfDueToday(item._dueDate));
-        console.log(item._dueDate, DateController.checkIfDueThisWeek(item._dueDate));
-        console.log(item._dueDate, DateController.checkIfOverdue(item._dueDate))
-
         cardsContainer.appendChild(card);
     }
 
@@ -140,9 +158,6 @@ class UserInterface {
         // filter tasks by project
         document.querySelectorAll(".sidebar-btn").forEach(projectBtn => {
             projectBtn.addEventListener('click', () => {
-                console.log(document.querySelectorAll(".sidebar-btn"))
-                projectBtn.style.borderColor = "#ffffff";
-                projectBtn.style.Color = "#ffffff";
                 const projectId = projectBtn.id;
                 console.log(projectId);
                 localStorage.setItem("selectedProject", projectId);
@@ -231,7 +246,7 @@ const DomEvents = () => {
     })
     
     document.addEventListener("DOMContentLoaded", (event) => {
-        localStorage.setItem("selectedProject", "general");
+        localStorage.setItem("selectedProject", "today");
         ui.render(localStorage.getItem("selectedProject"));
     })
 
